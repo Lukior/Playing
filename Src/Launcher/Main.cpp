@@ -8,30 +8,19 @@
 
 #include <iostream>
 
+#include "Tests/HelloTriangleApplication.h"
+
 int main(int argc, char** argv)
 {
-    glfwInit();
-
-    glfwWindowHint(GLFW_CLIENT_API, 0);
-    GLFWwindow* window = glfwCreateWindow(800, 600, "Vulkan Window", nullptr, nullptr);
-
-    uint32_t extensionCount = 0;
-    vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
-
-    std::cout << extensionCount << " extensions supported" << std::endl;
-
-    glm::mat4 matrix;
-    glm::vec4 vec;
-    auto test = matrix * vec;
-
-    while (!glfwWindowShouldClose(window))
+    HelloTriangleApplication app;
+    try
     {
-        glfwPollEvents();
+        app.Run();
     }
-
-    glfwDestroyWindow(window);
-
-    glfwTerminate();
-
-    return 0;
+    catch (const std::runtime_error& e)
+    {
+        std::cerr << e.what() << std::endl;
+        return EXIT_FAILURE;
+    }
+    return EXIT_SUCCESS;
 }
